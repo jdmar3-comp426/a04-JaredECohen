@@ -29,8 +29,9 @@ app.get("/app/", (req, res, next) => {
 
 // CREATE a new user (HTTP method POST) at endpoint /app/new/
 app.post("/app/new", (req, res) => {	
-	const stmt = db.prepare("INSERT INTO userinfo (user, pass) VALUES (?, ?)");
-	res.status(201).json(stmt);
+	const stmt = db.prepare("INSERT INTO userinfo (user, pass) VALUES (?, ?)").run();
+	res.status(201).json({"message":"1 record created: ID 3 (201)"});
+});
 });
 
 // READ a list of all users (HTTP method GET) at endpoint /app/users/
@@ -41,7 +42,7 @@ app.get("/app/users", (req, res) => {
 
 // READ a single user (HTTP method GET) at endpoint /app/user/:id
 app.get("app/user/:id", (req, res) => {
-	const stmt = db.prepare("SELECT * FROM userinfo WHERE id = ?");
+	const stmt = db.prepare("SELECT * FROM userinfo WHERE id = ?").get();
 	res.status(200).json(stmt);
 })
 
