@@ -43,9 +43,9 @@ app.get("/app/users", (req, res) => {
 
 // READ a single user (HTTP method GET) at endpoint /app/user/:id
 app.get("/app/user/:id", (req, res) => {
-	const stmt = db.prepare("SELECT * FROM userinfo WHERE id = ?");
-	const info = stmt.get(req.params.id)
-	res.status(200).json({"message": info.changes});
+	const stmt = db.prepare("SELECT * FROM userinfo WHERE id = 2").get();
+	//const info = stmt.get(req.params.id)
+	res.status(200).json({"message": stmt.changes});
 })
 
 
@@ -62,7 +62,7 @@ app.patch("/app/update/user/:id", (req, res) => {
 app.delete("/app/delete/user/:id", (req, res) => {
 	const stmt = db.prepare("DELETE FROM userinfo WHERE id = ?");
 	const info = stmt.run(req.params.id);
-	res.status(200).json(info);
+	res.status(200).json(info.changes);
 })
 
 // Default response for any other request
